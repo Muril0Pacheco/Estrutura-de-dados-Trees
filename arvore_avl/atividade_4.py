@@ -37,16 +37,20 @@ class AVLTree:
 
         # caso left-left
         if balance > 1 and valor < node.left.valor:
+            print(f"Rotação simples à direita no nó {node.valor}")
             return self._right_rotate(node)
         # caso right-right
         if balance < -1 and valor > node.right.valor:
+            print(f"Rotação simples à esquerda no nó {node.valor}")
             return self._left_rotate(node)
         # caso left-right
         if balance > 1 and valor > node.left.valor:
+            print(f"Rotação dupla esquerda-direita no nó {node.valor}")
             node.left = self._left_rotate(node.left)
             return self._right_rotate(node)
         # caso right-left
         if balance < -1 and valor < node.right.valor:
+            print(f"Rotação dupla direita-esquerda no nó {node.valor}")
             node.right = self._right_rotate(node.right)
             return self._left_rotate(node)
 
@@ -156,28 +160,24 @@ class AVLTree:
                 self._add_nodes(dot, node.right)
 
 if __name__ == "__main__":
-    # árvore fixa
-    avl_fixed = AVLTree()
-    valores_fixos = [55, 30, 80, 20, 45, 70, 90]
-    for v in valores_fixos:
-        avl_fixed.insert(v)
+    # Demonstração das rotações com valores fixos
 
-    avl_fixed.visualize("avl_fixed")
-    print("árvore fixa: [55, 30, 80, 20, 45, 70, 90]")
-    print("busca 45 na árvore fixa:", avl_fixed.search(45))
+    print("Inserção sequência [10, 20, 30] - deve forçar rotação simples à esquerda")
+    avl_simple_left = AVLTree()
+    for v in [10, 20, 30]:
+        avl_simple_left.insert(v)
+        avl_simple_left.visualize(f"avl_simple_left_{v}")
 
-    avl_fixed.delete(30)
-    avl_fixed.visualize("avl_fixed_delete")
+    print("\nInserção sequência [10, 30, 20] - deve forçar rotação dupla direita-esquerda")
+    avl_double_right_left = AVLTree()
+    for v in [10, 30, 20]:
+        avl_double_right_left.insert(v)
+        avl_double_right_left.visualize(f"avl_double_right_left_{v}")
 
-    avl_fixed.insert(60)
-    avl_fixed.visualize("avl_fixed_insert")
-
-    # árvore randômica
+    # Árvore com 20 valores aleatórios
     avl_random = AVLTree()
-    valores_random = random.sample(range(1, 200), 10)
+    valores_random = random.sample(range(1, 200), 20)
     for v in valores_random:
         avl_random.insert(v)
-
-    avl_random.visualize("avl_random")
-    print("valores aleatórios inseridos:", valores_random)
-    print("busca 45 na árvore randômica:", avl_random.search(45))
+    avl_random.visualize("avl_random_20")
+    print("\nValores aleatórios inseridos:", valores_random)
